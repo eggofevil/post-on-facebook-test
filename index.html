@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Facebook share example</title>
+    <style>
+      .AGFBBtn2 {
+        height: 3em;
+        width: 3em;
+        line-height: 2em;
+        padding: 0.5em;
+        border: none;
+        outline: none;
+        border-radius: 0.3em;
+        background-image: url(facebook512x512.png);
+        background-size: cover;
+        box-shadow: 0.05em 0.05em 0.05em #121b30,
+                    inset 0.2em 0.3em 0.5em rgba(88,88,88,0.3);
+}
+.AGFBBtn2:focus {
+  filter:brightness(135%);      
+}
+.AGFBBtn2:hover {
+  filter:brightness(135%);
+}
+.AGFBBtn2:active {
+  box-shadow: 0.01em 0.01em 0.05em #121b30,
+              inset 0.2em 0.2em 0.5em rgba(0,0,0,0.7),
+              inset -0.01em -0.01em 0.1em rgba(255,255,255,0.7);
+}
+    </style>
+  </head>
+  <body>
+    <article>
+      <h1>Facebook share example</h1>
+      <p id="#content-for-share">Some content for publish on facebook.</p>
+      <button class=AGFBBtn2></button>
+    </article>
+    <script>
+      
+      // Load facebook SDK
+      
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '311636892665113',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.11'
+        });
+        FB.AppEvents.logPageView();
+        console.log("Hello world!");
+        // My script
+      
+        var MyBtnFB = document.querySelector('.AGFBBtn2');
+        MyBtnFB.addEventListener('click', postOnFacebook);
+        
+        function postOnFacebook() {
+          console.log("Run the postOnFacebook function!");
+          //Publish on facebook function
+          FB.login(function(){
+            // Note: The call will only work if you accept the permission request
+            FB.api('/me/feed', 'post', {message: 'Hello, world!'});
+          }, {scope: 'publish_actions'});
+        }
+      };
+      
+      
+      (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/en_US/sdk.js";
+          console.log(js.src);
+          fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+      
+
+      
+    </script>
+  </body>
+</html>
